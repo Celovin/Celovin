@@ -38,10 +38,13 @@ export function Hero() {
         className="pointer-events-none absolute right-[-8%] top-1/2 -translate-y-1/2 w-[50vw] max-w-[600px] opacity-[0.04] select-none"
       />
 
+      {/* Bottom fade into next section */}
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-bg to-transparent" />
+
       <div className="mx-auto w-full max-w-[1200px]">
         <h1
           ref={headingRef}
-          className="max-w-[14ch] font-medium text-fg"
+          className="max-w-[14ch] text-fg"
         >
           사람의 가능성을
           <br />
