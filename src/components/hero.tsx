@@ -48,9 +48,17 @@ export function Hero() {
           소프트웨어를 만듭니다.
         </p>
 
-        <div className="mt-16 flex items-center gap-3 text-fg-dim text-xs tracking-widest uppercase">
-          <span className="inline-block h-px w-8 bg-fg-dim" />
-          스크롤하여 더 보기
+        <div className="mt-16 flex items-center">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            className="text-fg-dim animate-bounce"
+            style={{ animationDuration: "2s" }}
+          >
+            <path d="M5 8l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </div>
       </div>
     </section>

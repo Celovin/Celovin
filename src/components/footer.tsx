@@ -14,7 +14,7 @@ export function Footer() {
         <div className="flex flex-col items-start gap-1 md:items-end">
           <a
             href="mailto:hello@celovin.com"
-            className="text-fg-muted text-xs transition-colors hover:text-fg"
+            className="text-fg-muted text-sm py-2 transition-colors hover:text-fg"
           >
             hello@celovin.com
           </a>

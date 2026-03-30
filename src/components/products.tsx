@@ -63,20 +63,22 @@ export function Products() {
         <p className="text-xs tracking-widest uppercase text-fg-dim mb-4">Products</p>
         <h2 className="text-fg font-medium mb-20">우리가 만드는 것들</h2>
 
-        <div className="grid gap-px bg-border md:grid-cols-3">
-          {products.map((product) => (
+        <div className="grid gap-px bg-border md:grid-cols-2">
+          {products.map((product, i) => (
             <a
               key={product.name}
               href={product.href}
               target={product.href.startsWith("http") ? "_blank" : undefined}
               rel={product.href.startsWith("http") ? "noopener noreferrer" : undefined}
               data-animate
-              className="group relative bg-bg p-8 md:p-10 opacity-0 translate-y-6 transition-colors hover:bg-bg-elevated"
+              className={`group relative bg-bg p-8 md:p-10 opacity-0 translate-y-6 transition-all duration-300 hover:bg-bg-elevated hover:translate-y-0 hover:shadow-[inset_3px_0_0_var(--product-accent)] ${
+                i === 0 ? "md:col-span-2" : ""
+              }`}
               style={{ "--product-accent": product.accent } as React.CSSProperties}
             >
               <div className="flex items-start justify-between mb-6">
                 <div>
-                  <h3 className="text-fg font-medium group-hover:text-[var(--product-accent)] transition-colors">
+                  <h3 className={`text-fg font-medium group-hover:text-[var(--product-accent)] transition-colors ${i === 0 ? "text-xl" : ""}`}>
                     {product.name}
                   </h3>
                   <span className="text-fg-dim text-sm">{product.nameKo}</span>
@@ -92,7 +94,7 @@ export function Products() {
                 </span>
               </div>
 
-              <p className="text-fg-muted text-sm leading-relaxed max-w-[32ch]">
+              <p className={`text-fg-muted text-sm leading-relaxed ${i === 0 ? "max-w-[54ch]" : "max-w-[32ch]"}`}>
                 {product.description}
               </p>
 
