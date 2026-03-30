@@ -22,8 +22,8 @@ const products = [
   {
     name: "EditorKit Pro",
     nameKo: "에디터킷 프로",
-    href: "#",
-    description: "게임 현지화 전문 에디터 툴킷. 번역 검수, 용어 관리, 품질 분석을 하나로.",
+    href: "https://celovin.gumroad.com/l/editorkit-pro",
+    description: "AI 에디터 SaaS 보일러플레이트. 6개 독립 모듈, 6종 AI 프로바이더, 실시간 협업, 결제까지 풀소스 제공.",
     status: "On Sale",
     accent: "oklch(72% 0.12 30)",
   },

@@ -20,8 +20,8 @@ export function Header() {
       }`}
     >
       <nav className="mx-auto flex max-w-[1200px] items-center justify-between px-6 py-5">
-        <a href="#" className="text-fg font-medium tracking-tight text-[1.1rem]">
-          Celovin
+        <a href="#" className="flex items-center gap-2">
+          <img src="/logo.png" alt="Celovin" className="h-8 w-auto" />
         </a>
         <div className="flex items-center gap-8">
           <a

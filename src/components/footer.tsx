@@ -8,8 +8,6 @@ export function Footer() {
           <p className="text-fg text-sm font-medium mb-1">Celovin · 셀로빈</p>
           <p className="text-fg-dim text-xs leading-relaxed">
             사업자등록번호 871-12-02965
-            <br />
-            대표 최승원 · 경기도 수원시
           </p>
         </div>
 
