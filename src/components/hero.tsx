@@ -21,13 +21,21 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="relative flex min-h-svh flex-col justify-end px-6 pb-24 pt-32">
+    <section className="relative flex min-h-svh flex-col justify-end px-6 pb-24 pt-32 overflow-hidden">
       {/* Subtle grain texture */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
         }}
+      />
+
+      {/* Brand mark — large watermark */}
+      <img
+        src="/mark.png"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute right-[-8%] top-1/2 -translate-y-1/2 w-[50vw] max-w-[600px] opacity-[0.04] select-none"
       />
 
       <div className="mx-auto w-full max-w-[1200px]">
