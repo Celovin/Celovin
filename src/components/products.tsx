@@ -58,20 +58,12 @@ export function Products() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const items = entry.target.querySelectorAll("[data-animate]");
-            items.forEach((el, i) => {
-              const htmlEl = el as HTMLElement;
-              setTimeout(() => {
-                htmlEl.style.transition = "opacity 0.6s ease-out, transform 0.6s ease-out";
-                htmlEl.style.opacity = "1";
-                htmlEl.style.transform = "translateY(0)";
-              }, i * 120);
-            });
+            entry.target.classList.add("is-visible");
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -91,11 +83,10 @@ export function Products() {
               href={product.href}
               target={product.href.startsWith("http") ? "_blank" : undefined}
               rel={product.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              data-animate
-              className={`group relative p-8 md:p-10 opacity-0 translate-y-6 transition-all duration-300 hover:bg-bg-elevated hover:translate-y-0 hover:shadow-[inset_3px_0_0_var(--product-accent)] ${
+              className={`product-card group relative p-8 md:p-10 transition-all duration-300 hover:bg-bg-elevated hover:shadow-[inset_3px_0_0_var(--product-accent)] ${
                 i === 0 ? "md:col-span-2 bg-bg-elevated md:p-12" : "bg-bg"
               }`}
-              style={{ "--product-accent": product.accent } as React.CSSProperties}
+              style={{ "--product-accent": product.accent, "--card-index": i } as React.CSSProperties}
             >
               <div className="flex items-start justify-between mb-6">
                 <div className="flex items-start gap-4">
