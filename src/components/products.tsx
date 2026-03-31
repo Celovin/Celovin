@@ -52,58 +52,85 @@ const products = [
 
 export function Products() {
   const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const section = sectionRef.current;
+    const cards = cardsRef.current;
+    if (!section || !cards) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
+            cards.querySelectorAll(".product-card").forEach((card, i) => {
+              setTimeout(() => {
+                (card as HTMLElement).style.opacity = "1";
+                (card as HTMLElement).style.transform = "translateY(0)";
+              }, i * 120);
+            });
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.15 }
     );
 
-    if (sectionRef.current) observer.observe(sectionRef.current);
+    observer.observe(section);
     return () => observer.disconnect();
   }, []);
 
   return (
     <section id="products" ref={sectionRef} className="px-6 py-32">
       <div className="mx-auto max-w-[1200px]">
-        <p className="text-xs tracking-widest uppercase text-fg-dim mb-4">Products</p>
-        <h2 className="text-fg mb-20">우리가 만드는 것들</h2>
+        <p className="text-xs tracking-widest uppercase text-accent-dim mb-4">Products</p>
+        <h2 className="text-fg mb-16">우리가 만드는 것들</h2>
 
-        <div className="grid gap-px bg-border md:grid-cols-2">
+        <div ref={cardsRef} className="grid gap-4 md:grid-cols-2">
           {products.map((product, i) => (
             <a
               key={product.name}
               href={product.href}
               target={product.href.startsWith("http") ? "_blank" : undefined}
               rel={product.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              className={`product-card group relative p-8 md:p-10 transition-all duration-300 hover:bg-bg-elevated hover:shadow-[inset_3px_0_0_var(--product-accent)] ${
-                i === 0 ? "md:col-span-2 bg-bg-elevated md:p-12" : "bg-bg"
+              className={`product-card group relative rounded-2xl border border-border p-8 md:p-10 transition-all duration-500 ease-out hover:border-[color-mix(in_oklch,var(--product-accent)_30%,var(--border))] ${
+                i === 0
+                  ? "md:col-span-2 bg-bg-elevated md:p-12"
+                  : "bg-bg hover:bg-bg-elevated"
               }`}
-              style={{ "--product-accent": product.accent, "--card-index": i } as React.CSSProperties}
+              style={
+                {
+                  "--product-accent": product.accent,
+                  opacity: 0,
+                  transform: "translateY(24px)",
+                } as React.CSSProperties
+              }
             >
-              <div className="flex items-start justify-between mb-6">
+              {/* Subtle accent glow on hover */}
+              <div
+                className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                style={{
+                  background: `radial-gradient(ellipse at 30% 20%, color-mix(in oklch, ${product.accent} 8%, transparent), transparent 70%)`,
+                }}
+              />
+
+              <div className="relative flex items-start justify-between mb-6">
                 <div className="flex items-start gap-4">
-                  <span className="text-fg-dim mt-0.5 shrink-0 group-hover:text-[var(--product-accent)] transition-colors">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border text-fg-dim transition-all duration-300 group-hover:border-[color-mix(in_oklch,var(--product-accent)_25%,var(--border))] group-hover:text-[var(--product-accent)]">
                     {product.icon}
                   </span>
                   <div>
-                    <h3 className={`text-fg font-medium group-hover:text-[var(--product-accent)] transition-colors ${i === 0 ? "text-xl" : ""}`}>
+                    <h3 className={`text-fg font-medium transition-colors duration-300 group-hover:text-[var(--product-accent)] ${i === 0 ? "text-xl" : ""}`}>
                       {product.name}
                     </h3>
                     <span className="text-fg-dim text-sm">{product.nameKo}</span>
                   </div>
                 </div>
                 <span
-                  className="rounded-full px-2.5 py-0.5 text-[0.7rem] font-medium tracking-wide uppercase"
+                  className="rounded-full px-2.5 py-0.5 text-[0.7rem] font-medium tracking-wide uppercase border"
                   style={{
-                    background: `color-mix(in oklch, ${product.accent} 15%, transparent)`,
+                    background: `color-mix(in oklch, ${product.accent} 10%, transparent)`,
+                    borderColor: `color-mix(in oklch, ${product.accent} 20%, transparent)`,
                     color: product.accent,
                   }}
                 >
@@ -111,13 +138,13 @@ export function Products() {
                 </span>
               </div>
 
-              <p className={`text-fg-muted text-sm leading-relaxed ${i === 0 ? "max-w-[54ch]" : "max-w-[32ch]"}`}>
+              <p className={`relative text-fg-muted text-sm leading-relaxed ${i === 0 ? "max-w-[54ch]" : ""}`}>
                 {product.description}
               </p>
 
-              <div className="mt-8 flex items-center gap-2 text-fg-dim text-xs group-hover:text-[var(--product-accent)] transition-colors">
+              <div className="relative mt-8 flex items-center gap-2 text-fg-dim text-xs transition-colors duration-300 group-hover:text-[var(--product-accent)]">
                 자세히 보기
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform group-hover:translate-x-1">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform duration-300 group-hover:translate-x-1">
                   <path d="M1 7h11M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
