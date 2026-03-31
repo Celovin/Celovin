@@ -1,12 +1,18 @@
+"use client";
+
+import { useLocale } from "@/i18n/provider";
+
 export function Contact() {
+  const { t } = useLocale();
+
   return (
     <section id="contact" className="px-6 py-32">
       <div className="mx-auto max-w-[1200px]">
         <div className="border-t border-border pt-16">
-          <p className="text-xs tracking-widest uppercase text-fg-dim mb-4">Contact</p>
-          <h2 className="text-fg mb-8">함께 이야기하기</h2>
+          <p className="text-xs tracking-widest uppercase text-fg-dim mb-4">{t.contact.sectionLabel}</p>
+          <h2 className="text-fg mb-8">{t.contact.heading}</h2>
           <p className="text-fg-muted text-sm leading-relaxed max-w-[48ch] mb-12">
-            사업 제안, 협업 문의, 또는 제품에 대한 의견이 있으시다면 언제든 연락해 주세요.
+            {t.contact.description}
           </p>
 
           <a

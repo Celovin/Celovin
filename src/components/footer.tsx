@@ -1,13 +1,18 @@
+"use client";
+
+import { useLocale } from "@/i18n/provider";
+
 export function Footer() {
   const year = new Date().getFullYear();
+  const { t } = useLocale();
 
   return (
     <footer className="border-t border-border px-6 py-12">
       <div className="mx-auto flex max-w-[1200px] flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="text-fg text-sm font-medium mb-1">Celovin · 셀로빈</p>
+          <p className="text-fg text-sm font-medium mb-1">Celovin</p>
           <p className="text-fg-dim text-xs leading-relaxed">
-            사업자등록번호 871-12-02965
+            {t.footer.bizNumber}
           </p>
         </div>
 

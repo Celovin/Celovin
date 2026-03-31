@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useLocale } from "@/i18n/provider";
 
 export function Hero() {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const { t } = useLocale();
 
   useEffect(() => {
     const els = [headingRef.current, subtitleRef.current];
@@ -19,6 +21,8 @@ export function Hero() {
       }, 200 + i * 150);
     });
   }, []);
+
+  const [before, accent, after] = t.hero.heading;
 
   return (
     <section className="relative flex min-h-svh flex-col justify-end px-6 pb-24 pt-32 overflow-hidden">
@@ -46,17 +50,16 @@ export function Hero() {
           ref={headingRef}
           className="max-w-[14ch] text-fg"
         >
-          사람의 가능성을
+          {before}
           <br />
-          <span className="text-accent">확장</span>하는 기술
+          <span className="text-accent">{accent}</span>{after}
         </h1>
 
         <p
           ref={subtitleRef}
           className="mt-8 max-w-[42ch] text-lg text-fg-muted leading-relaxed"
         >
-          셀로빈은 AI 기술을 통해 창작, 검증, 생산성의 경계를 넓히는
-          소프트웨어를 만듭니다.
+          {t.hero.subtitle}
         </p>
 
         <div className="mt-16 flex items-center">

@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useLocale } from "@/i18n/provider";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { locale, t, toggleLocale } = useLocale();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -40,19 +42,26 @@ export function Header() {
             href="#products"
             className="text-fg-muted text-sm py-2 px-1 transition-colors hover:text-fg"
           >
-            제품
+            {t.nav.products}
           </a>
           <a
             href="#philosophy"
             className="text-fg-muted text-sm py-2 px-1 transition-colors hover:text-fg"
           >
-            철학
+            {t.nav.philosophy}
           </a>
+          <button
+            onClick={toggleLocale}
+            className="text-fg-muted text-sm py-2 px-1 transition-colors hover:text-fg cursor-pointer"
+            aria-label={locale === "ko" ? "Switch to English" : "한국어로 전환"}
+          >
+            {locale === "ko" ? "EN" : "KO"}
+          </button>
           <a
             href="#contact"
             className="text-sm text-bg bg-fg rounded-full px-5 py-3 font-medium transition-all hover:bg-accent hover:text-bg"
           >
-            연락하기
+            {t.nav.contact}
           </a>
         </div>
 
@@ -60,7 +69,7 @@ export function Header() {
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden flex flex-col justify-center items-center w-11 h-11 gap-1.5"
-          aria-label="메뉴 열기"
+          aria-label={t.nav.menuLabel}
         >
           <span className={`block w-5 h-px bg-fg transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[3.5px]" : ""}`} />
           <span className={`block w-5 h-px bg-fg transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[3.5px]" : ""}`} />
@@ -79,21 +88,30 @@ export function Header() {
             onClick={() => setMenuOpen(false)}
             className="text-fg text-2xl font-medium transition-colors hover:text-accent"
           >
-            제품
+            {t.nav.products}
           </a>
           <a
             href="#philosophy"
             onClick={() => setMenuOpen(false)}
             className="text-fg text-2xl font-medium transition-colors hover:text-accent"
           >
-            철학
+            {t.nav.philosophy}
           </a>
+          <button
+            onClick={() => {
+              toggleLocale();
+              setMenuOpen(false);
+            }}
+            className="text-fg-muted text-2xl font-medium transition-colors hover:text-accent cursor-pointer"
+          >
+            {locale === "ko" ? "English" : "한국어"}
+          </button>
           <a
             href="#contact"
             onClick={() => setMenuOpen(false)}
             className="text-accent text-2xl font-medium transition-colors hover:text-fg"
           >
-            연락하기
+            {t.nav.contact}
           </a>
         </div>
       </div>

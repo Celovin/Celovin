@@ -1,24 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-
-const principles = [
-  {
-    title: "도구가 사라질 때까지",
-    body: "최고의 도구는 그 존재를 잊게 만듭니다. 복잡한 기술을 단순한 경험으로 전환하는 것이 우리의 설계 기준입니다.",
-  },
-  {
-    title: "신뢰할 수 있는 AI",
-    body: "AI의 출력은 검증 가능해야 합니다. 생성뿐 아니라 근거와 투명성을 함께 제공합니다.",
-  },
-  {
-    title: "작은 팀, 큰 레버리지",
-    body: "소수의 사람이 거대한 영향을 만들 수 있는 시대입니다. 우리의 소프트웨어가 그 지렛대가 됩니다.",
-  },
-];
+import { useLocale } from "@/i18n/provider";
 
 export function Philosophy() {
   const sectionRef = useRef<HTMLElement>(null);
+  const { t } = useLocale();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -48,13 +35,13 @@ export function Philosophy() {
   return (
     <section id="philosophy" ref={sectionRef} className="px-6 py-32">
       <div className="mx-auto max-w-[1200px]">
-        <p className="text-xs tracking-widest uppercase text-fg-dim mb-4">Philosophy</p>
+        <p className="text-xs tracking-widest uppercase text-fg-dim mb-4">{t.philosophy.sectionLabel}</p>
         <h2 className="text-fg mb-20 max-w-[18ch]">
-          기술에 대한 우리의 생각
+          {t.philosophy.heading}
         </h2>
 
         <div className="space-y-0 border-t border-border">
-          {principles.map((p) => (
+          {t.philosophy.items.map((p) => (
             <div
               key={p.title}
               data-animate
