@@ -47,7 +47,7 @@ export function Studios() {
           <div>
             <p className="section-eyebrow text-accent-dim">{t.studios.sectionLabel}</p>
             <h2 className="mt-4 text-fg max-w-[18ch]">{t.studios.heading}</h2>
-            <p className="mt-6 text-fg-muted text-sm leading-relaxed max-w-[44ch]">
+            <p className="mt-6 text-fg-muted text-sm leading-relaxed">
               {t.studios.subhead}
             </p>
           </div>
