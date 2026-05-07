@@ -3,13 +3,24 @@
 import { useEffect, useRef } from "react";
 import { useLocale } from "@/i18n/provider";
 
-const productsMeta = [
+type ProductMeta = {
+  name: string;
+  nameKo: string;
+  href: string;
+  status: string;
+  accent: string;
+  span: "wide" | "half";
+  icon: React.ReactNode;
+};
+
+const productsMeta: ProductMeta[] = [
   {
     name: "Usan",
     nameKo: "우산",
     href: "https://usan.ai",
     status: "Live",
     accent: "oklch(75% 0.14 250)",
+    span: "wide",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z" />
@@ -24,6 +35,7 @@ const productsMeta = [
     href: "https://thelabforge.com",
     status: "Beta",
     accent: "oklch(70% 0.14 150)",
+    span: "half",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M9 2h6v6l3 3-3 3v6H9v-6L6 11l3-3V2z" />
@@ -38,11 +50,48 @@ const productsMeta = [
     href: "https://celovin.gumroad.com/l/editorkit-pro",
     status: "On Sale",
     accent: "oklch(72% 0.12 30)",
+    span: "half",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="16 18 22 12 16 6" />
         <polyline points="8 6 2 12 8 18" />
         <line x1="14" y1="4" x2="10" y2="20" />
+      </svg>
+    ),
+  },
+  {
+    name: "Luvoire",
+    nameKo: "루부아르",
+    href: "https://github.com/Celovin/luvoire",
+    status: "Open Source",
+    accent: "oklch(72% 0.18 305)",
+    span: "half",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="3" />
+        <circle cx="5.5" cy="6.5" r="1.8" />
+        <circle cx="18.5" cy="6.5" r="1.8" />
+        <circle cx="5.5" cy="17.5" r="1.8" />
+        <circle cx="18.5" cy="17.5" r="1.8" />
+        <line x1="7" y1="7.5" x2="10" y2="10.5" />
+        <line x1="17" y1="7.5" x2="14" y2="10.5" />
+        <line x1="7" y1="16.5" x2="10" y2="13.5" />
+        <line x1="17" y1="16.5" x2="14" y2="13.5" />
+      </svg>
+    ),
+  },
+  {
+    name: "parabreak",
+    nameKo: "파라브레이크",
+    href: "https://parabreak.com",
+    status: "Preview",
+    accent: "oklch(72% 0.14 195)",
+    span: "half",
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 6l4 4-4 4" />
+        <path d="M12 6l4 4-4 4" />
+        <line x1="20" y1="4" x2="20" y2="20" />
       </svg>
     ),
   },
@@ -62,91 +111,161 @@ export function Products() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            cards.querySelectorAll(".product-card").forEach((card, i) => {
+            cards.querySelectorAll<HTMLElement>(".product-card").forEach((card, i) => {
               setTimeout(() => {
-                (card as HTMLElement).style.opacity = "1";
-                (card as HTMLElement).style.transform = "translateY(0)";
-              }, i * 120);
+                card.style.opacity = "1";
+                card.style.transform = "translateY(0)";
+              }, i * 90);
             });
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.12 }
     );
 
     observer.observe(section);
-    return () => observer.disconnect();
+
+    // Cursor-tracking glow per card
+    const cleanups: Array<() => void> = [];
+    cards.querySelectorAll<HTMLElement>(".product-card").forEach((card) => {
+      const onMove = (e: MouseEvent) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty("--gx", `${x}%`);
+        card.style.setProperty("--gy", `${y}%`);
+      };
+      card.addEventListener("mousemove", onMove);
+      cleanups.push(() => card.removeEventListener("mousemove", onMove));
+    });
+
+    return () => {
+      observer.disconnect();
+      cleanups.forEach((fn) => fn());
+    };
   }, []);
 
   return (
-    <section id="products" ref={sectionRef} className="px-6 py-32">
+    <section id="products" ref={sectionRef} className="relative px-6 py-32">
       <div className="mx-auto max-w-[1200px]">
-        <p className="text-xs tracking-widest uppercase text-accent-dim mb-4">{t.products.sectionLabel}</p>
-        <h2 className="text-fg mb-16">{t.products.heading}</h2>
+        <div className="mb-16 flex items-end justify-between gap-8">
+          <div>
+            <p className="section-eyebrow text-accent-dim">{t.products.sectionLabel}</p>
+            <h2 className="mt-4 text-fg">{t.products.heading}</h2>
+          </div>
+          <div className="hidden md:block text-fg-dim text-xs tracking-wide">
+            <span className="tabular-nums">05</span> · 2026
+          </div>
+        </div>
 
-        <div ref={cardsRef} className="grid gap-4 md:grid-cols-2">
+        <div ref={cardsRef} className="grid gap-4 md:grid-cols-2 md:gap-5">
           {productsMeta.map((product, i) => (
             <a
               key={product.name}
               href={product.href}
               target={product.href.startsWith("http") ? "_blank" : undefined}
               rel={product.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              className={`product-card group relative rounded-2xl border border-border p-8 md:p-10 transition-all duration-500 ease-out hover:border-[color-mix(in_oklch,var(--product-accent)_30%,var(--border))] ${
-                i === 0
+              className={`product-card group relative overflow-hidden rounded-2xl border border-border p-8 md:p-10 ${
+                product.span === "wide"
                   ? "md:col-span-2 bg-bg-elevated md:p-12"
-                  : "bg-bg hover:bg-bg-elevated"
+                  : "bg-bg"
               }`}
               style={
                 {
                   "--product-accent": product.accent,
+                  "--gx": "50%",
+                  "--gy": "0%",
                   opacity: 0,
                   transform: "translateY(24px)",
                 } as React.CSSProperties
               }
             >
-              {/* Subtle accent glow on hover */}
+              {/* Cursor-tracked accent glow */}
               <div
-                className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                 style={{
-                  background: `radial-gradient(ellipse at 30% 20%, color-mix(in oklch, ${product.accent} 8%, transparent), transparent 70%)`,
+                  background:
+                    "radial-gradient(420px circle at var(--gx) var(--gy), color-mix(in oklch, var(--product-accent) 14%, transparent), transparent 60%)",
                 }}
               />
+              {/* Soft static glow for the wide hero card so it feels alive at rest */}
+              {product.span === "wide" && (
+                <div
+                  className="pointer-events-none absolute -inset-px rounded-2xl opacity-50 transition-opacity duration-500 group-hover:opacity-90"
+                  style={{
+                    background:
+                      "radial-gradient(ellipse at 18% 8%, color-mix(in oklch, var(--product-accent) 10%, transparent), transparent 55%)",
+                  }}
+                />
+              )}
 
-              <div className="relative flex items-start justify-between mb-6">
+              <div className="relative flex items-start justify-between gap-4 mb-6">
                 <div className="flex items-start gap-4">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border text-fg-dim transition-all duration-300 group-hover:border-[color-mix(in_oklch,var(--product-accent)_25%,var(--border))] group-hover:text-[var(--product-accent)]">
+                  <span
+                    className="card-icon flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border text-fg-dim transition-all duration-300 group-hover:border-[color-mix(in_oklch,var(--product-accent)_30%,var(--border))] group-hover:text-[var(--product-accent)] group-hover:bg-[color-mix(in_oklch,var(--product-accent)_6%,transparent)]"
+                  >
                     {product.icon}
                   </span>
                   <div>
-                    <h3 className={`text-fg font-medium transition-colors duration-300 group-hover:text-[var(--product-accent)] ${i === 0 ? "text-xl" : ""}`}>
+                    <h3
+                      className={`text-fg font-medium transition-colors duration-300 group-hover:text-[var(--product-accent)] ${
+                        product.span === "wide" ? "text-xl" : ""
+                      }`}
+                    >
                       {product.name}
                     </h3>
                     <span className="text-fg-dim text-sm">{product.nameKo}</span>
                   </div>
                 </div>
                 <span
-                  className="rounded-full px-2.5 py-0.5 text-[0.7rem] font-medium tracking-wide uppercase border"
+                  className="status-pill"
                   style={{
                     background: `color-mix(in oklch, ${product.accent} 10%, transparent)`,
-                    borderColor: `color-mix(in oklch, ${product.accent} 20%, transparent)`,
+                    borderColor: `color-mix(in oklch, ${product.accent} 22%, transparent)`,
                     color: product.accent,
                   }}
                 >
+                  {product.status === "Live" && <span className="status-dot" />}
                   {product.status}
                 </span>
               </div>
 
-              <p className={`relative text-fg-muted text-sm leading-relaxed ${i === 0 ? "max-w-[54ch]" : ""}`}>
+              <p
+                className={`relative text-fg-muted text-sm leading-relaxed ${
+                  product.span === "wide" ? "max-w-[58ch]" : ""
+                }`}
+              >
                 {t.products.items[i].description}
               </p>
 
               <div className="relative mt-8 flex items-center gap-2 text-fg-dim text-xs transition-colors duration-300 group-hover:text-[var(--product-accent)]">
                 {t.products.learnMore}
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="transition-transform duration-300 group-hover:translate-x-1">
-                  <path d="M1 7h11M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                >
+                  <path
+                    d="M1 7h11M8 3l4 4-4 4"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </div>
+
+              {/* Bottom edge accent line — fades in on hover */}
+              <div
+                className="pointer-events-none absolute inset-x-8 bottom-0 h-px scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100 origin-left"
+                style={{
+                  background:
+                    "linear-gradient(to right, transparent, color-mix(in oklch, var(--product-accent) 60%, transparent), transparent)",
+                }}
+              />
             </a>
           ))}
         </div>
