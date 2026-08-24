@@ -30,68 +30,17 @@ const productsMeta: ProductMeta[] = [
     ),
   },
   {
-    name: "TheLabForge",
-    nameKo: "더랩포지",
-    href: "https://thelabforge.com",
-    status: "Beta",
-    accent: "oklch(70% 0.14 150)",
-    span: "half",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M9 2h6v6l3 3-3 3v6H9v-6L6 11l3-3V2z" />
-        <line x1="12" y1="22" x2="12" y2="18" />
-        <line x1="12" y1="6" x2="12" y2="2" />
-      </svg>
-    ),
-  },
-  {
     name: "EditorKit Pro",
     nameKo: "에디터킷 프로",
     href: "https://celovin.gumroad.com/l/editorkit-pro",
     status: "On Sale",
     accent: "oklch(72% 0.12 30)",
-    span: "half",
+    span: "wide",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="16 18 22 12 16 6" />
         <polyline points="8 6 2 12 8 18" />
         <line x1="14" y1="4" x2="10" y2="20" />
-      </svg>
-    ),
-  },
-  {
-    name: "Luvoire",
-    nameKo: "루부아르",
-    href: "https://github.com/Celovin/luvoire",
-    status: "Open Source",
-    accent: "oklch(72% 0.18 305)",
-    span: "half",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="3" />
-        <circle cx="5.5" cy="6.5" r="1.8" />
-        <circle cx="18.5" cy="6.5" r="1.8" />
-        <circle cx="5.5" cy="17.5" r="1.8" />
-        <circle cx="18.5" cy="17.5" r="1.8" />
-        <line x1="7" y1="7.5" x2="10" y2="10.5" />
-        <line x1="17" y1="7.5" x2="14" y2="10.5" />
-        <line x1="7" y1="16.5" x2="10" y2="13.5" />
-        <line x1="17" y1="16.5" x2="14" y2="13.5" />
-      </svg>
-    ),
-  },
-  {
-    name: "parabreak",
-    nameKo: "파라브레이크",
-    href: "https://parabreak.com",
-    status: "Preview",
-    accent: "oklch(72% 0.14 195)",
-    span: "half",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 6l4 4-4 4" />
-        <path d="M12 6l4 4-4 4" />
-        <line x1="20" y1="4" x2="20" y2="20" />
       </svg>
     ),
   },

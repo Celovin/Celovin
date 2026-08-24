@@ -23,19 +23,7 @@ export const translations = {
         },
         {
           description:
-            "AI 생성 논문 판별 및 검증 서비스. 근거 리포트와 통계 재검산을 통합한 학술 신뢰 도구.",
-        },
-        {
-          description:
             "AI 에디터 SaaS 보일러플레이트. 6개 독립 모듈, 6종 AI 프로바이더, 실시간 협업, 결제까지 풀소스 제공.",
-        },
-        {
-          description:
-            "오픈소스 LLM 멀티에이전트 시뮬레이션 엔진. 게임 NPC, 사회과학 연구, 공공안전 모델링을 위한 7축 벤치마크와 7개국 페르소나 데이터셋.",
-        },
-        {
-          description:
-            "Godot을 위한 메타 엔진. 캐릭터, 시나리오, 자산 파이프라인을 한 자리에서 다루는 게임 제작 워크플로의 다음 레이어.",
         },
       ],
     },
@@ -113,19 +101,7 @@ export const translations = {
         },
         {
           description:
-            "AI-generated paper detection and verification. An academic integrity tool combining evidence reports with statistical recalculation.",
-        },
-        {
-          description:
             "AI editor SaaS boilerplate. 6 independent modules, 6 AI providers, real-time collaboration, and payments — full source included.",
-        },
-        {
-          description:
-            "Open-source LLM multi-agent simulation engine. A 7-axis public benchmark and 7-country persona dataset for game NPCs, social science research, and public-safety modeling.",
-        },
-        {
-          description:
-            "A meta engine for Godot. Characters, scenarios, and asset pipelines under one roof — the next layer of the game-making workflow.",
         },
       ],
     },

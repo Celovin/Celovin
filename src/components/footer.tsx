@@ -4,10 +4,7 @@ import { useLocale } from "@/i18n/provider";
 
 const productLinks = [
   { name: "Usan", href: "https://usan.ai" },
-  { name: "TheLabForge", href: "https://thelabforge.com" },
   { name: "EditorKit Pro", href: "https://celovin.gumroad.com/l/editorkit-pro" },
-  { name: "Luvoire", href: "https://github.com/Celovin/luvoire" },
-  { name: "parabreak", href: "https://parabreak.com" },
 ];
 
 const studioLinks = [{ name: "ara.studio", href: "https://ara.studio" }];

@@ -19,12 +19,12 @@ const notoSerifKr = Noto_Serif_KR({
 export const metadata: Metadata = {
   title: "Celovin — 셀로빈",
   description:
-    "AI 기술로 사람의 가능성을 확장합니다. Usan, TheLabForge, EditorKit Pro, Luvoire, parabreak, ara.studio.",
+    "AI 기술로 사람의 가능성을 확장합니다. Usan, EditorKit Pro, ara.studio.",
   metadataBase: new URL("https://celovin.com"),
   openGraph: {
     title: "Celovin — 셀로빈",
     description:
-      "AI 기술로 사람의 가능성을 확장합니다. 제품과 스튜디오, 그리고 오픈소스 시뮬레이션 엔진.",
+      "AI 제품과 창작 스튜디오를 통해 사람의 가능성을 확장합니다.",
     url: "https://celovin.com",
     siteName: "Celovin",
     locale: "ko_KR",
